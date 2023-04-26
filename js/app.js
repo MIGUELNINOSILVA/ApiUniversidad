@@ -7,7 +7,14 @@ const modalBody = document.querySelector('.modal-body');
 function insertDataTable(info) {
     console.log(info);
     info.forEach(dato => {
-        const {id_usuario, cedula, nombre, programa, jornada, sexo} = dato;
+        const {
+            id_usuario,
+            cedula,
+            nombre,
+            programa,
+            jornada,
+            sexo
+        } = dato;
         const titles = document.createElement('tr');
         titles.innerHTML = `
             <td>${id_usuario}</td>
@@ -24,11 +31,13 @@ function insertDataTable(info) {
 
 
 async function mostrarModal(id, name) {
-    exampleModalLabel.textContent = `${name}`
-    const response = await fetch(`https://vermenmasterchief.tk/detalleEstudiante.php?api_key=Metallica&id_usuario=${id}`);
-    const data = await response.json();
-    if(data.datos[0].promedio >= '3.0'){
-        modalBody.innerHTML = `
+    try {
+        exampleModalLabel.textContent = `${name}`
+        const response = await fetch(`https://vermenmasterchief.tk/detalleEstudiante.php?api_key=Metallica&id_usuario=${id}`);
+        const data = await response.json();
+        console.log(data);
+        if (data.datos[0].promedio >= '3.0' || data.datos[0].promedio >= '3') {
+            modalBody.innerHTML = `
         <img src="${data.datos[0].foto}">
         <h2>Promedio : ${data.datos[0].promedio}</h2>
         <h2>Sisben : ${data.datos[0].sisben}</h2>
@@ -36,8 +45,8 @@ async function mostrarModal(id, name) {
             Has pasado
         </div>
     `
-    }else{
-        modalBody.innerHTML = `
+        } else {
+            modalBody.innerHTML = `
         <img src="${data.datos[0].foto}">
         <h2>Promedio : ${data.datos[0].promedio}</h2>
         <h2>Sisben : ${data.datos[0].sisben}</h2>
@@ -45,18 +54,27 @@ async function mostrarModal(id, name) {
             Has perdido
         </div>
     `
+        }
+    } catch (error) {
+        console.log(error);
     }
-    
+
+
 }
 
 
 
 async function getData() {
-    const response = await fetch('https://vermenmasterchief.tk/estudiantes.php');
-    const data = await response.json();
-    insertDataTable(data.datos);
+    try {
+        const response = await fetch('https://vermenmasterchief.tk/estudiantes.php');
+        const data = await response.json();
+        insertDataTable(data.datos);
+    } catch (error) {
+        console.log(error);
+    }
+
 }
 
 
 
-document.addEventListener('DOMContentLoaded', getData);
+document.addEventListener('DOMContentLoaded', getData);     
