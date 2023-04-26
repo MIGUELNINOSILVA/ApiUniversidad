@@ -1,0 +1,20 @@
+header{
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    background-image: url('../img/background.jpeg');
+    background-size: 100%;
+    background-color: black;
+    opacity: .8;
+    background-repeat: no-repeat;
+    margin: 5rem 0;
+}
+
+header section div h1{
+    opacity: 1;
+    color: #fff;
+}
+
+header section div p{
+    font-weight: bold;
+}
